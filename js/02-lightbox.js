@@ -3,9 +3,6 @@ import { galleryItems } from './gallery-items.js';
 
 const gallery = document.querySelector(`.gallery`);
 
-let isOpenModal = false;
-let modal;
-
 const galleryMarkup = galleryItems
   .map(
     item => `<li class="gallery__item">
@@ -28,22 +25,8 @@ gallery.addEventListener(`click`, onGalleryClick);
 function onGalleryClick(event) {
   event.preventDefault();
   if (event.target.classList.contains(`gallery__image`)) {
-    lightbox.openAt(
+    lightbox.open(
       galleryItems.findIndex(item => item.preview === event.target.src)
     );
-
-    modal = basicLightbox.create(
-      `
-    <img width="1400" height="900" src="${largeImage}">
-`
-    );
-    modal.show();
-    isOpenModal = true;
   }
 }
-window.addEventListener(`keydown`, event => {
-  if (event.key === 'Escape' && isOpenModal) {
-    modal.close();
-    isOpenModal = false;
-  }
-});
